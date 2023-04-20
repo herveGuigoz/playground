@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/assets/images/favicon.svg">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    {% block stylesheet %}{% endblock %}
+</head>
+
+<body>
+    <nav class="container">
+        <ul>
+            <li><strong>Playground</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/notifications">Notifications</a></li>
+        </ul>
+    </nav>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    {% block javascript %}{% endblock %}
+</body>
+</html>
+
+
