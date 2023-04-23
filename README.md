@@ -2,7 +2,7 @@
 
 ## Description
 
-Experimental project to test Oauth, Push Notifications and other PHP features.
+Experimental project to test Oauth, Push Notifications.
 
 ## Installation
 
@@ -28,7 +28,7 @@ docker compose exec php php migration.php
 
 ## Authentication
 
-The apps will be responsible for generating or refreshing the identity tokens, while your backend server will
+The app will be responsible for generating or refreshing the identity tokens, while the server will
 be responsible only for validating them.
 
 ### Google API
