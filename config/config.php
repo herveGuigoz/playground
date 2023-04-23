@@ -17,11 +17,9 @@ define('S3_ACCESS_SECRET', getenv('S3_ACCESS_SECRET'));
 
 // Oauth
 define('OAUTH_REDIRECT_URI', getenv('OAUTH_REDIRECT_URI'));
-
 define('GOOGLE_CLIENT_ID', getenv('GOOGLE_CLIENT_ID'));
 define('GOOGLE_CLIENT_SECRET', getenv('GOOGLE_CLIENT_SECRET'));
 define('GOOGLE_REDIRECT_URI', getenv('GOOGLE_REDIRECT_URI'));
-
 define('APPLE_CLIENT_ID', getenv('APPLE_CLIENT_ID'));
 define('APPLE_TEAM_ID', getenv('APPLE_TEAM_ID'));
 define('APPLE_KEY_ID', getenv('APPLE_KEY_ID'));

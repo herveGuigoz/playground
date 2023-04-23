@@ -5,7 +5,8 @@ namespace App\Security;
 use App\Services\StorageService;
 use DateTimeImmutable;
 use Firebase\JWT\JWK;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as HttpClient;
+use InvalidArgumentException;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Ecdsa\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -16,6 +17,12 @@ use Lcobucci\JWT\Signer\Key\InMemory;
  */
 class AppleAuthenticator
 {
+    public const PLATFORM_ANDROID = 'android';
+
+    public const PLATFORM_IOS = 'ios';
+
+    public const PLATFORM_WEB = 'web';
+
     /**
      * The Application bundle ID for Ios applications.
      * The Services ID for web and Android applications.
@@ -37,16 +44,20 @@ class AppleAuthenticator
 
     private StorageService $storage;
 
-    private Client $httpClient;
+    private HttpClient $httpClient;
 
     public function __construct(string $platform)
     {
-        if ($platform !== 'ios') {
+        if (!in_array($platform, [self::PLATFORM_ANDROID, self::PLATFORM_IOS, self::PLATFORM_WEB])) {
+            throw new InvalidArgumentException(sprintf('Invalid platform "%s"', $platform));
+        }
+
+        if ($platform !== self::PLATFORM_IOS) {
             $this->clientId = APPLE_SERVICE_ID;
         }
 
         $this->storage = new StorageService();
-        $this->httpClient = new Client();
+        $this->httpClient = new HttpClient();
     }
 
     /**
@@ -63,7 +74,7 @@ class AppleAuthenticator
     }
 
     /**
-     * Get the access token from the server based on the authorization code received from the application.
+     * Get the access token from authorization code send by the application.
      * The code is single use only and will expire after 5 minutes.
      */
     public function getAccessToken(string $code): AppleAccessToken
@@ -74,12 +85,14 @@ class AppleAuthenticator
                 'client_secret' => $this->getClientSecret(),
                 'code' => $code,
                 'grant_type' => 'authorization_code',
-                'redirect_uri' => OAUTH_REDIRECT_URI, // optional and for native apps
+                'redirect_uri' => OAUTH_REDIRECT_URI, // optional for native apps
             ]
         ]);
 
+        $keys = $this->fetchJwkSet();
+
         return new AppleAccessToken(
-            $this->fetchJwkSet(),
+            $keys,
             json_decode((string) $response->getBody(), true)
         );
     }

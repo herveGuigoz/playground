@@ -8,6 +8,8 @@ class User
 
     private ?string $email;
 
+    private ?string $appleId;
+
     private ?string $googleId;
 
     public function getId(): ?int
@@ -30,6 +32,18 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getAppleId(): ?string
+    {
+        return $this->appleId;
+    }
+
+    public function setAppleId(string $appleId): self
+    {
+        $this->appleId = $appleId;
 
         return $this;
     }

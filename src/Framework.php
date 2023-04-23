@@ -60,7 +60,6 @@ class Framework
 
         // instance the controller, call the method with given parameters.
         try {
-            // execute the controller
             return (new $controller())->$method(...$parameters);
         } catch (\Exception $e) {
             if (APP_ENV === 'dev') {

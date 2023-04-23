@@ -27,7 +27,7 @@ class UserRepository extends AbstractRepository
         $user = $statement->fetch();
         if ($user) {
             $user = new User();
-            $user->setId((int)$user['id']);
+            $user->setId((int) $user['id']);
             $user->setEmail($user['email']);
         }
 

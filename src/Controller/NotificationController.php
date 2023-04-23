@@ -7,23 +7,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class NotificationController extends AbstractController
 {
-    private FirebaseService $firebase;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->firebase = new FirebaseService();
-    }
-
     public function index(): Response
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $item = array_map('trim', $_POST);
+            $firebase = new FirebaseService();
 
-            $this->firebase->sendPushNotification(topic: $item['topic'], device: $item['device'], data: [
+            $items = array_map('trim', $_POST);
+
+            $firebase->sendPushNotification(topic: $items['topic'], device: $items['device'], data: [
                 'title' => 'Notification',
                 'body' => 'This is the body',
-                'redirect' => $item['redirect'],
+                'redirect' => $items['redirect'],
             ]);
 
             return $this->render('Notifications/success.html.twig');

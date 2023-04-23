@@ -8,6 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SecurityController extends AbstractController
 {
+    /**
+     * OAuth2 Google Connect
+     * @param string|null $token Google's access token
+     * @return Response
+     */
     public function googleConnectAction(?string $token = null): Response
     {
         if (!$token) {
@@ -18,15 +23,19 @@ class SecurityController extends AbstractController
 
         $user = $authenticator->authenticate($token);
 
-        return $this->json(['user' => $user]);
+        return $this->json([
+            'user' => $user,
+        ]);
     }
 
-    public function appleConnectAction(
-        ?string $token = null,
-        ?string $platform = null,
-        ?string $firstName = null,
-        ?string $lastName = null
-    ): Response {
+    /**
+     * OAuth2 Apple Connect
+     * @param string|null $token Apple's authorization code
+     * @param string|null $platform Application platform (ios or android)
+     * @return Response
+     */
+    public function appleConnectAction(?string $token = null, ?string $platform = null): Response
+    {
         if (!$token || !$platform) {
             return new Response('Invalid Arguments', Response::HTTP_BAD_REQUEST);
         }
@@ -37,8 +46,16 @@ class SecurityController extends AbstractController
 
         return $this->json([
             'user' => $user,
-            'firstName' => $firstName,
-            'lastName' => $lastName,
         ]);
+    }
+
+    /**
+     * The callback route used for Android, which will send the callback parameters from Apple into the Android app.
+     * his is done using a deeplink, which will cause the Chrome Custom Tab to be dismissed and providing the
+     * parameters from Apple back to the app.
+     */
+    public function appleConnectRedirectAction(): Response
+    {
+        return $this->redirect('TODO');
     }
 }

@@ -37,7 +37,7 @@ class AppleAccessToken
         }
 
         if (null === $decoded) {
-            throw new Exception('Unable to decode the JWT token');
+            throw new Exception('Invalid token');
         }
 
         $this->payload = json_decode(json_encode($decoded), true);
@@ -82,7 +82,7 @@ class AppleAccessToken
 
     /**
      * The email address is either the user’s real email address or the proxy address created from apple when the user
-     * declined to share their real email address. Will only be provided for the initial authorization ?
+     * declined to share their real email address. Will only be provided for the initial authorization.
      */
     public function getEmail(): ?string
     {
