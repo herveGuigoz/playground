@@ -29,7 +29,7 @@ class AppleAccessToken
 
         foreach ($keys as $key) {
             try {
-                $decoded = JWT::decode($idToken, $key, ['ES256']);
+                $decoded = JWT::decode($idToken, $key);
                 break;
             } catch (\Exception $e) {
                 continue;
