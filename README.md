@@ -86,7 +86,7 @@ When using this endpoint for authorizing the user, use the following parameters:
 When using this endpoint for validating the refresh token, use the following parameters: `client_id`, `client_secret`,
 `grant_type`, and `refresh_token`.
 
-### Push Notifications
+## Push Notifications
 
 To use Push Notifications, you need to create a project on [Firebase](https://console.firebase.google.com/)
 
@@ -95,7 +95,7 @@ Then generate FCM server credentials from the Firebase console:
 - Navigate to the Cloud Messaging tab
 - Generate and download the json file containing the credentials.
 
-# Sending push notifications with Firebase cloud message (FCM)
+### Sending push notifications with Firebase cloud message (FCM)
 
 Before digging into details it's important to understand the architectural idea
 ![image](https://user-images.githubusercontent.com/1279756/41772490-2402772a-7619-11e8-9acf-f0c17cbd0b75.png)
@@ -109,18 +109,18 @@ Before digging into details it's important to understand the architectural idea
    channel, and sends the notification to each push-network, one at a time, asynchronously in a queue.
 5. The push-network then queues the request from FCM and sends the push notification through a socket connection to the device.
 
-## SDKs
+### SDKs
 
 - PHP: https://github.com/kreait/firebase-php
 
-## Messages
+### Messages
 
 A push message contains title, body, and payload. The title and body are displayed on the device, and the payload is
 passed to the app.
 
 ***It's highly recommend using both title & body, but body is optional***
 
-### Android Push Notification Structure
+#### Android Push Notification Structure
 
 ```php
 $config = AndroidConfig::fromArray([
@@ -143,7 +143,7 @@ $config = AndroidConfig::fromArray([
 
 `icon`: Unless specified, let the Android app deal with this. Kind of similar to sound, but with notification icons instead.
 
-### iOS Push Notification Structure
+#### iOS Push Notification Structure
 
 On iOS, push notifications are structured as binary payloads that are sent via the Apple Push Notification Service (APNS).
 Here's an example of what an iOS push notification payload might look like:
@@ -176,7 +176,7 @@ This is the default priority if apns-priority is not included in the APNS config
 including the title, body text, sound, and badge number. In addition to the "aps" dictionary, the payload can also
 include custom data that the app can use to handle the notification.
 
-### Payload
+#### Payload
 
 The payload is used to include custom data such as notification type or deep-link to a specific page in the app.
 It's a JSON object with a limit of 2kb.
