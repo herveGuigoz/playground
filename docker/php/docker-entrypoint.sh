@@ -10,11 +10,17 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ]; then
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
-	if [ "$APP_ENV" != 'prod' ]; then
-		composer install --prefer-dist --no-progress --no-interaction
-	fi
+	composer install \
+        --ignore-platform-reqs \
+        --no-interaction \
+        --no-plugins \
+        --no-scripts \
+        --prefer-dist \
+        --quiet
 
-#    php /srv/app/migrations/migration.php
+#	if [ "$APP_ENV" != 'prod' ]; then
+#		php /srv/app/migrations/migration.php
+#	fi
 fi
 
 exec docker-php-entrypoint "$@"
