@@ -25,9 +25,4 @@ class NotificationController extends AbstractController
 
         return $this->render('Notifications/index.html.twig');
     }
-
-    public function success(): string
-    {
-        return $this->render('Notifications/success.html.twig');
-    }
 }

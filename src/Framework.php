@@ -27,10 +27,6 @@ class Framework
         '/notifications' => [
             'NotificationController',
             'index'
-        ],
-        '/notifications/success' => [
-            'NotificationController',
-            'success'
         ]
     ];
 
