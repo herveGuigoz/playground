@@ -7,3 +7,4 @@ db.php
 .vscode
 .env
 /docker/db/data
+.DS_Store
