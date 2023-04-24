@@ -56,6 +56,9 @@ class SecurityController extends AbstractController
      */
     public function appleConnectRedirectAction(): Response
     {
-        return $this->redirect('TODO');
+        // This is the deeplink that will be used to send the parameters back to the Android app.
+        // The deeplink will be in the format of :
+        // intent://callback?<REQUEST_PARAMS>Intent;package=<ANDROID_BUNDLE>;scheme=signinwithapple
+        return $this->redirect('TODO', status: 307);
     }
 }

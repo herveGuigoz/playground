@@ -67,10 +67,7 @@ class AppleAuthenticator
     {
         $accessToken = $this->getAccessToken($token);
 
-        return [
-            'id' => $accessToken->getUserId(),
-            'email' => $accessToken->getEmail(),
-        ];
+        return $accessToken->toArray();
     }
 
     /**

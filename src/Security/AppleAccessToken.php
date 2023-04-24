@@ -88,4 +88,14 @@ class AppleAccessToken
     {
         return $this->payload['email'] ?? null;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'access_token' => $this->accessToken,
+            'expires_in' => $this->expiresIn,
+            'refresh_token' => $this->refreshToken,
+            'id_token' => $this->payload,
+        ];
+    }
 }
