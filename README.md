@@ -2,25 +2,22 @@
 
 ## Description
 
-Experimental project to test Oauth, Push Notifications.
+PHP Playground is an experimental project for testing OAuth and push notifications.
 
 ## Installation
 
-This project is ready to use with docker.
-
-To build the image, go into the project directory and in your CLI type:
+You can use this project with Docker. Simply go to the project directory and run the following commands on your CLI:
 
 ```
 docker compose build --pull --no-cache
-```
-
-then, run it to open it on your localhost :
-
-```
 docker compose up --detach
 ```
 
+This will build and run the project on your localhost.
+
 ### Populate the database
+
+To populate the database, use the following command:
 
 ```
 docker compose exec php php migration.php
@@ -28,45 +25,34 @@ docker compose exec php php migration.php
 
 ## Authentication
 
-The app will be responsible for generating or refreshing the identity tokens, while the server will
-be responsible only for validating them.
+The app generates and refreshes identity tokens while the server only validates them.
 
 ### Google API
 
+To use Google API, you must have an existing project in the [API Console](https://console.cloud.google.com/),
+or you can create a new one.
+
 #### Configure a Google API Console project
 
-1. Open an existing project in the [API Console](https://console.cloud.google.com/), or create a new project.
-2. On the OAuth consent screen page, make sure all of the information is complete and accurate.
-3. On the Credentials page, create an Android type client ID for your app if you don't already have one. You will need
-to specify your app's package name and SHA-1 certificate fingerprint.
-See [Authenticating Your Client](https://developers.google.com/android/guides/client-auth) for more information.
+1. On the OAuth consent screen page, make sure that all the information is complete and accurate.
+2. On the Credentials page, create an Android-type client ID for your app if you haven't already.
+You will need to specify your app's package name and SHA-1 certificate fingerprint.
+Refer to [Authenticating Your Client](https://developers.google.com/android/guides/client-auth) for more information.
+3. On the Credentials page, create a second client ID for a web application.
+4. Add your `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REDIRECT_URI` to the .env file.
+5. Add the Web client ID into your Android project's strings.xml file (app/source/main/res/values/string.xml):
 
-#### Get your backend server's OAuth 2.0 client ID
-
-You need to get the OAuth 2.0 client ID that represents your backend server.
-
-On the Credentials page, create a Web application type client ID.
-
-Add your `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` and `GOOGLE_REDIRECT_URI` in the .env file.
-
-Add the Web client ID into your Android project's strings.xml file (app/source/main/res/values/string.xml):
 ```xml
 <string name="server_client_id">YOUR_WEB_CLIENT_ID</string>
 ```
-
-### Facebook API
-
-[Documentation](https://developers.facebook.com/apps/)
 
 ### Apple API
 
 #### Prerequisites
 
-You will need an Apple Developer Account to obtain the necessary parameters.
+To use Apple API, you need an Apple Developer Account to obtain the necessary parameters.
 
-In the identifier section, you will need to edit configurations and enable the Sign in with Apple feature.
-
-With this option enabled, the next step will be to prepare the parameters needed to perform a post request to the Apple API.
+To enable the Sign in with Apple feature, go to the Identifier section, edit configurations, and enable the feature.
 
 #### Generate the Identity Token
 
@@ -86,18 +72,22 @@ When using this endpoint for authorizing the user, use the following parameters:
 When using this endpoint for validating the refresh token, use the following parameters: `client_id`, `client_secret`,
 `grant_type`, and `refresh_token`.
 
+### Facebook API
+
+[Documentation](https://developers.facebook.com/apps/)
+
 ## Push Notifications
 
-To use Push Notifications, you need to create a project on [Firebase](https://console.firebase.google.com/)
+To use Push Notifications, you need to create a project on [Firebase](https://console.firebase.google.com/) and generate
+FCM server credentials from the Firebase console. Here's how:
 
-Then generate FCM server credentials from the Firebase console:
-- Go to the project settings
-- Navigate to the Cloud Messaging tab
-- Generate and download the json file containing the credentials.
+1. Go to the project settings
+2. Navigate to the Cloud Messaging tab
+3. Generate and download the JSON file containing the credentials.
 
 ### Sending push notifications with Firebase cloud message (FCM)
 
-Before digging into details it's important to understand the architectural idea.
+To send push notifications with Firebase cloud message (FCM), follow these steps:
 
 ![image](https://user-images.githubusercontent.com/1279756/41772490-2402772a-7619-11e8-9acf-f0c17cbd0b75.png)
 
